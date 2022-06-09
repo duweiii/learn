@@ -1,6 +1,6 @@
-import { Ref, watchEffect } from "./main.js"
+import { ref, watchEffect } from "./main.js"
 
-const a = new Ref(10)
+const a = ref(10)
 
 watchEffect(()=>{
   let b = a.value + 10;

@@ -1,7 +1,7 @@
 // 实现 ref 功能
 let currentEffect = null;
 
-export class Ref{
+class Ref{
   constructor(value){
     this._value = value
     this.effects = new Set()
@@ -28,6 +28,10 @@ export class Ref{
       effect()
     })
   }
+}
+
+export const ref = function(value){
+  return new Ref(value)
 }
 
 export const watchEffect = function(fn){
