@@ -1,4 +1,4 @@
-import { ref, watchEffect } from "./core/index.js";
+import { ref } from "./core/index.js";
 
 const App = {
   render({age}){
