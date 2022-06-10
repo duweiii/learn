@@ -12,11 +12,17 @@ import { reactive } from "./reactive.js"
 // a.value = 20;
 
 // reactive
-let rea = reactive({ age: 10 })
+let rea = reactive(
+  {
+    zhangsan: {
+      age: 10
+    }
+  }
+)
 
 watchEffect(()=>{
-  let b = rea.age + 10;
+  let b = rea.zhangsan.age + 10;
   console.log( b )
 })
 
-rea.age = 20;
+rea.zhangsan.age = 20;

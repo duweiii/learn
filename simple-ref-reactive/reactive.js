@@ -7,7 +7,10 @@
 // 创建全局的依赖字典
 import { ref } from './main.js'
 const targetsMap = new Map();
-
+/**
+ * 这样实现的缺陷就是只能处理 { key: value } 这样只有一层的对象
+ * 再多一层就没法处理了 { name: { age: 11 } } 
+ */
 export const reactive = (raw) => {
   return new Proxy(raw, {
     get(target, key){
@@ -38,8 +41,3 @@ const getDependClass = (raw, key) => {
   }
   return dep;
 }
-
-// let a = reactive({ name: 'haha'})
-// console.log( a.name )
-// a.name = 'ene'
-// console.log( a.name )
