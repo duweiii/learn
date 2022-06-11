@@ -32,7 +32,7 @@ const App = {
     // 测试props改变
     return h('div', 
       age.props,
-      h('p', {id: 'p-id'}, 'p-content-text' ), 
+      h('p', {id: 'p-id'}, ...age.children ), 
       h( 'article', { name:"article-name"}, 'article-content-text') 
     )
   },
@@ -41,8 +41,10 @@ const App = {
       type: 'div',
       count: 1,
       props: {
-        a: 'a'
-      }
+        a: 'a',
+        id: 'aaa'
+      },
+      children: ['p-content-one', 'p-content-two']
     })
     globalThis.age = age;
     return {
