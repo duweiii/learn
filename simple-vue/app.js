@@ -21,7 +21,7 @@ const App = {
     return h('div', 
       {id:'div-id', class:'div-class'} , 
       h('p', {id: 'p-id'}, 'p-content-text' ), 
-      h( 'article', { name:"article-name"}, 'article-content-text' ) 
+      h( 'article', { name:"article-name"}, 'article-content-text: ' + age.value ) 
     )
   },
   setup(){
