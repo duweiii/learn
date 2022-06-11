@@ -18,7 +18,11 @@ import { ref, h } from "./core/index.js";
 // 修改为 render function
 const App = {
   render({age}){
-    return h('div', null , 123)
+    return h('div', 
+      {id:'div-id', class:'div-class'} , 
+      h('p', {id: 'p-id'}, 'p-content-text' ), 
+      h( 'article', { name:"article-name"}, 'article-content-text' ) 
+    )
   },
   setup(){
     let age = ref(1);
