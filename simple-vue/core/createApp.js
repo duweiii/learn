@@ -1,3 +1,4 @@
+import { mountElement } from "./mountElement.js";
 import { watchEffect } from "./ref.js";
 
 export function createApp(rootComponent){
@@ -35,8 +36,12 @@ export function createApp(rootComponent){
          * 我们需要的是这个对象最新的值
          * 所以要保持对同一个对象的引用
          */
-        const element = rootComponent.render( setupResult )
-        rootContainer.append(element)
+        // const element = rootComponent.render( setupResult )
+        // rootContainer.append(element)
+
+        // 修改为处理 vdom
+        const vdom = rootComponent.render( setupResult );
+        mountElement(vdom, rootContainer)
       })
     }
   }

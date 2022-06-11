@@ -1,10 +1,24 @@
-import { ref } from "./core/index.js";
+import { ref, h } from "./core/index.js";
 
+// const App = {
+//   renzder({age}){
+//     let div = document.createElement("div")
+//     div.textContent = age.value;
+//     return div;
+//   },
+//   setup(){
+//     let age = ref(1);
+//     globalThis.age = age;
+//     return {
+//       age,
+//     }
+//   }
+// }
+
+// 修改为 render function
 const App = {
   render({age}){
-    let div = document.createElement("div")
-    div.textContent = age.value;
-    return div;
+    return h('div', null , 123)
   },
   setup(){
     let age = ref(1);
@@ -14,5 +28,4 @@ const App = {
     }
   }
 }
-
 export default App;
