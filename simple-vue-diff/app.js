@@ -1,4 +1,4 @@
-import { ref, h, reactive } from "./core/index.js";
+import { h, reactive } from "./core/index.js";
 
 // const App = {
 //   renzder({age}){
