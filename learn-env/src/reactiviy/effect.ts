@@ -1,7 +1,7 @@
 class ReactiveEffect {
   private _fn: any;
 
-  constructor(fn){
+  constructor(fn, public scheduler?){
     this._fn = fn;
   }
   run(){
@@ -31,13 +31,17 @@ export function trigger(target, key){
   for( const effect of dep ){
     // 这里是为了处理只使用reactive 但不使用effect的情况下
     // 触发get进行依赖收集时，收集到的是个undefined，因为没有effect配合暴露依赖
-    effect && effect.run()
+    if( effect?.scheduler ){
+      effect.scheduler()
+    }else{
+      effect && effect.run()
+    }
   }
 }
 
 let activeEffect;
-export function effect(fn){
-  let _effect = new ReactiveEffect(fn)
+export function effect(fn, option: any = {}){
+  let _effect = new ReactiveEffect(fn, option?.scheduler)
   _effect.run();
 
   return _effect.run.bind(_effect)
