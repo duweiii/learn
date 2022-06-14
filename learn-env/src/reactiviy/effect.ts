@@ -43,6 +43,8 @@ let activeEffect;
 export function effect(fn, option: any = {}){
   let _effect = new ReactiveEffect(fn, option?.scheduler)
   _effect.run();
+  
+  const runner = _effect.run.bind(_effect);
 
-  return _effect.run.bind(_effect)
+  return runner;
 }
