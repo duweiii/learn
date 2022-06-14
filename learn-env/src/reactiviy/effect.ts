@@ -1,6 +1,8 @@
 class ReactiveEffect {
   private _fn: any;
-
+  active = true;
+  deps = [];
+  onStop?: () => void;
   constructor(fn, public scheduler?){
     this._fn = fn;
   }
@@ -8,6 +10,21 @@ class ReactiveEffect {
     activeEffect = this;
     return this._fn();
   }
+  stop(){
+    if( this.active ){
+      if( this.onStop ){
+        this.onStop()
+      }
+      cleanupEffect(this)
+      this.active = false;
+    }
+  }
+}
+
+function cleanupEffect(effect){
+  effect.deps.forEach(dep => {
+    dep.delete(effect)
+  })
 }
 
 let targetMap = new Map();
@@ -22,7 +39,11 @@ export function track(target, key){
     dep = new Set();
     depsMap.set( key, dep )
   }
+  if( !activeEffect ) return ;
+  // 通过 target key 找到对应的依赖容器，收集依赖
   dep.add(activeEffect)
+  // 反向收集，标注当前的类，存在于哪些集合中
+  activeEffect.deps.push( dep )
 }
 
 export function trigger(target, key){
@@ -42,9 +63,18 @@ export function trigger(target, key){
 let activeEffect;
 export function effect(fn, option: any = {}){
   let _effect = new ReactiveEffect(fn, option?.scheduler)
+  Object.assign(_effect, option)
+
   _effect.run();
-  
-  const runner = _effect.run.bind(_effect);
+
+  const runner: any = _effect.run.bind(_effect);
+  runner.effect = _effect;
 
   return runner;
+}
+
+
+export function stop(runner){
+  let effect = runner.effect;
+  effect.stop();
 }

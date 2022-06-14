@@ -1,4 +1,4 @@
-import { effect } from "../effect";
+import { effect, stop } from "../effect";
 import { reactive } from "../reactive";
 
 describe( 'effect', ()=>{
@@ -49,4 +49,38 @@ describe( 'effect', ()=>{
     run()
     expect(dummy).toBe(2);
   })
+
+  it("stop", () => {
+    let dummy;
+    let obj = reactive({ foo: 1});
+    let runner = effect(()=>{
+      dummy = obj.foo;
+    })
+    expect(dummy).toBe(1);
+
+    obj.foo = 2;
+    expect(dummy).toBe(2);
+
+    stop(runner);
+    obj.foo = 3;
+    expect(dummy).toBe(2);
+
+    runner();
+    expect(dummy).toBe(3)
+  })
+
+  it("on stop", () => {
+    let dummy;
+    let obj = reactive({ foo: 1});
+    const runner = effect(()=>{
+      dummy = obj.foo;
+    },
+    { onStop: () => { dummy = 2} }
+    )
+
+    expect(dummy).toBe(1);
+    stop(runner);
+    expect(dummy).toBe(2)
+  })
+
 })
