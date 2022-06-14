@@ -1,4 +1,4 @@
-import { reactive } from "../reactive";
+import { isReactive, reactive, readOnly } from "../reactive";
 
 describe("reactive", ()=>{
   it("happy path", ()=>{
@@ -10,5 +10,12 @@ describe("reactive", ()=>{
     expect(user.age).toBe(10)
     user.age = 11;
     expect(user.age).toBe(11)
+  })
+
+  it("is reactive", () => {
+    let origin = { foo: 1};
+    let obj = reactive(origin);
+    expect( isReactive( obj ) ).toBe(true)
+    expect( isReactive( origin ) ).toBe(false)
   })
 })

@@ -1,3 +1,5 @@
+import { extend } from "../shared";
+
 class ReactiveEffect {
   private _fn: any;
   active = true;
@@ -63,7 +65,7 @@ export function trigger(target, key){
 let activeEffect;
 export function effect(fn, option: any = {}){
   let _effect = new ReactiveEffect(fn, option?.scheduler)
-  Object.assign(_effect, option)
+  extend(_effect, option)
 
   _effect.run();
 
