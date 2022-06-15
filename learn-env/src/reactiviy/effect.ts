@@ -1,5 +1,8 @@
 import { extend } from "../shared";
 
+let activeEffect;
+let shouldTrack = false;
+
 class ReactiveEffect {
   private _fn: any;
   active = true;
@@ -9,8 +12,15 @@ class ReactiveEffect {
     this._fn = fn;
   }
   run(){
+    if( !this.active ){
+      return this._fn();
+    }
+
+    shouldTrack = true;
     activeEffect = this;
-    return this._fn();
+    const result = this._fn();
+    shouldTrack = false;
+    return result;
   }
   stop(){
     if( this.active ){
@@ -27,10 +37,13 @@ function cleanupEffect(effect){
   effect.deps.forEach(dep => {
     dep.delete(effect)
   })
+  effect.deps = [];
 }
 
 let targetMap = new Map();
 export function track(target, key){
+  if( !isTracking() ) return;
+
   let depsMap = targetMap.get(target)
   if( !depsMap ){
     depsMap = new Map();
@@ -41,15 +54,19 @@ export function track(target, key){
     dep = new Set();
     depsMap.set( key, dep )
   }
-  if( !activeEffect ) return ;
+  if( dep.has(activeEffect) ) return ;
   // 通过 target key 找到对应的依赖容器，收集依赖
   dep.add(activeEffect)
   // 反向收集，标注当前的类，存在于哪些集合中
   activeEffect.deps.push( dep )
 }
 
+function isTracking(){
+  return activeEffect !== undefined && shouldTrack;
+}
 export function trigger(target, key){
   let depsMap = targetMap.get(target)
+  if( !depsMap ) return ;
   let dep = depsMap.get( key );
   for( const effect of dep ){
     // 这里是为了处理只使用reactive 但不使用effect的情况下
@@ -62,7 +79,6 @@ export function trigger(target, key){
   }
 }
 
-let activeEffect;
 export function effect(fn, option: any = {}){
   let _effect = new ReactiveEffect(fn, option?.scheduler)
   extend(_effect, option)

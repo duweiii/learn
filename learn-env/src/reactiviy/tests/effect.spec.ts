@@ -83,4 +83,25 @@ describe( 'effect', ()=>{
     expect(dummy).toBe(2)
   })
 
+  it("optimize stop", () => {
+    let dummy;
+    let user = reactive({ foo: 1});
+    const runner = effect(()=>{
+      dummy = user.foo;
+    })
+    expect( dummy ).toBe(1);
+    user.foo = 2;
+    expect( dummy ).toBe(2);
+    
+    stop( runner );
+
+    user.foo = 3;
+    expect(dummy).toBe(2);
+
+    user.foo++;
+    // user.foo = user.foo + 1;
+    // get -> set -> 重新收集了依赖
+    // 但是stop功能希望的是执行之后，以后收集依赖也不会收集runner所属的类了。
+    expect( dummy ).toBe(2);
+  })
 })

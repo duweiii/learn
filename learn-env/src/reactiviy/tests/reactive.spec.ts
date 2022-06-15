@@ -1,4 +1,5 @@
-import { isReactive, reactive, readOnly } from "../reactive";
+import { effect } from "../effect";
+import { isReactive, reactive } from "../reactive";
 
 describe("reactive", ()=>{
   it("happy path", ()=>{
@@ -17,5 +18,19 @@ describe("reactive", ()=>{
     let obj = reactive(origin);
     expect( isReactive( obj ) ).toBe(true)
     expect( isReactive( origin ) ).toBe(false)
+  })
+
+  it('deep nesting',() => {
+    let dummy;
+    let obj = reactive({ a:{b: 2} });
+    expect( isReactive( obj.a )).toBe(true)
+
+    effect(() => {
+      dummy = obj.a.b;
+    })
+    expect(dummy).toBe(2)
+
+    obj.a.b = 4;
+    expect(dummy).toBe(4)
   })
 })
