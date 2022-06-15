@@ -9,9 +9,6 @@ const readOnlyGet = createGetters(true);
 function createGetters(isReadonly = false){
   return function get(target, key){
     let res = Reflect.get(target, key)
-    if( !isReadonly ){
-      track(target, key)
-    }
     if( key === ERactiveFlags.isReactive){
       return !isReadonly;
     }else if(key === ERactiveFlags.isReadonly ){
@@ -19,6 +16,9 @@ function createGetters(isReadonly = false){
     }
     if( isObject(res) ) {
       return isReadonly ? readOnly(res) : reactive(res);
+    }
+    if( !isReadonly ){
+      track(target, key)
     }
     return res;
   }
