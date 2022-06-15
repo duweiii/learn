@@ -1,4 +1,4 @@
-import { reactiveHandlers, readonlyHandlers } from "./baseHandlers";
+import { reactiveHandlers, readonlyHandlers, shallowReadonlyHandlers } from "./baseHandlers";
 
 export const enum ERactiveFlags {
   isReactive = '__v_isReactive',
@@ -12,6 +12,10 @@ export function reactive(obj){
 export function readOnly(obj){
   return createActiveObject(obj, readonlyHandlers)
 }
+export function shallowReadonly(obj){
+  return createActiveObject(obj, shallowReadonlyHandlers)
+}
+
 
 export function isReactive(obj){
   let res = obj[ERactiveFlags.isReactive];

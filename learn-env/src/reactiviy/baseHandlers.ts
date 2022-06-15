@@ -4,9 +4,9 @@ import { ERactiveFlags, reactive, readOnly } from "./reactive";
 
 const reactiveGet = createGetters();
 const reactiveSet = createSetters();
-const readOnlyGet = createGetters(true);
-
-function createGetters(isReadonly = false){
+const readOnlyGet = createGetters(true);  
+const shallowReadonlyGet = createGetters(true, true)
+function createGetters(isReadonly = false, shallowReadonly = false){
   return function get(target, key){
     let res = Reflect.get(target, key)
     if( key === ERactiveFlags.isReactive){
@@ -14,11 +14,14 @@ function createGetters(isReadonly = false){
     }else if(key === ERactiveFlags.isReadonly ){
       return isReadonly;
     }
-    if( isObject(res) ) {
-      return isReadonly ? readOnly(res) : reactive(res);
-    }
     if( !isReadonly ){
       track(target, key)
+    }
+    if( shallowReadonly ) {
+      return res;
+    }
+    if( isObject(res) ) {
+      return isReadonly ? readOnly(res) : reactive(res);
     }
     return res;
   }
@@ -46,3 +49,7 @@ export const readonlyHandlers = {
     return true;
   },
 }
+
+export const shallowReadonlyHandlers = Object.assign({}, readonlyHandlers, {
+  get: shallowReadonlyGet,
+})
