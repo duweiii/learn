@@ -15,8 +15,9 @@ export function readOnly(obj){
 export function shallowReadonly(obj){
   return createActiveObject(obj, shallowReadonlyHandlers)
 }
-
-
+export function isProxy(value){
+  return isReactive(value) || isReadonly(value);
+}
 export function isReactive(obj){
   let res = obj[ERactiveFlags.isReactive];
   return !!res;

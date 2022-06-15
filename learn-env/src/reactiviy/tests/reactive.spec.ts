@@ -1,5 +1,5 @@
 import { effect } from "../effect";
-import { isReactive, reactive } from "../reactive";
+import { isProxy, isReactive, reactive } from "../reactive";
 
 describe("reactive", ()=>{
   it("happy path", ()=>{
@@ -11,6 +11,7 @@ describe("reactive", ()=>{
     expect(user.age).toBe(10)
     user.age = 11;
     expect(user.age).toBe(11)
+    expect( isProxy(user) ).toBe(true)
   })
 
   it("is reactive", () => {
