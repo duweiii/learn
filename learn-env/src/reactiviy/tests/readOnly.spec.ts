@@ -24,4 +24,9 @@ describe("readonly", ()=>{
     expect( isReadonly( origin ) ).toBe(false)
   })
 
+  it('deep nesting',() => {
+    let obj = readOnly({ a:{b: 2} });
+    expect( isReadonly( obj.a )).toBe(true)
+  })
+
 })
