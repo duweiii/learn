@@ -54,20 +54,3 @@ export const readonlyHandlers = {
 export const shallowReadonlyHandlers = Object.assign({}, readonlyHandlers, {
   get: shallowReadonlyGet,
 })
-
-export function proxyRefs(raw){
-  return new Proxy(raw, {
-    get(target, key){
-      let res = Reflect.get(target, key);
-      return unRef(res);
-    },
-    set(target, key, value){
-      if( isRef(target[key]) && !isRef(value) ){
-        target[key].value = value;
-      }else{
-        Reflect.set(target, key, value);
-      }
-      return true;
-    }
-  })
-}
