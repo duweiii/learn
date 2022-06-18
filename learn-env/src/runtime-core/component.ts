@@ -37,7 +37,5 @@ export function handleSetupResult(instance, setupResult){
 
 export function finishComponent(instance){
   const component = instance.type;
-  if( component.render ){
-    instance.render = component.render;
-  }
+  instance.render = component.render;
 }
