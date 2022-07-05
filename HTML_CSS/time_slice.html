@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #root{
+            width:300px;
+            height:400px;
+            overflow:auto;
+            outline:1px solid #666666;
+        }
+        li:nth-of-type(odd){
+            background:#eee;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+    </div>
+    <script>
+        const list = new Array(1000000).fill('Hi')
+        // let domStr = ''
+        // list.map( (i,index) =>{
+        //     domStr += `<li>${index}</li>`
+        // })
+        // document.querySelector("#root").innerHTML = domStr // 10s
+        let i = 0 ; 
+        const loop = function(start,count){
+            console.log(i++)
+            setTimeout(()=>{    
+                list.slice(start,start+count).map((i,index)=>{
+                    var a = document.createElement("li")
+                    a.innerText = start + index;
+                    document.querySelector("#root").appendChild(a)
+                })
+                loop(start+count , count)
+            },0)
+        }
+        loop(0,20)
+    </script>
+</body>
+</html>

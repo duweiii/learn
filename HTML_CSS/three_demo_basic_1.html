@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>*{margin:0;padding:0;}</style>
+</head>
+<body>
+    <script type="text/javascript" src="../tool/three.min.js"></script>
+    <script>
+        // 场景
+        var scene = new THREE.Scene()
+        // 摄像机
+        var camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight , 0.1 , 1000)
+        camera.position.z = 5;
+        // 渲染器
+        var renderer = new THREE.WebGLRenderer()
+        renderer.setSize(window.innerWidth,window.innerHeight)
+        document.body.appendChild(renderer.domElement)
+        // 物体
+        var geometry = new THREE.BoxGeometry(1,1,1)
+        // var material = new THREE.MeshBasicMaterial({color:"yellowgreen"}) // 这是最基础的物体材质，不会对光源起反应
+        var material = new THREE.MeshLambertMaterial({color:"yellowgreen"})   // 对光线有反射效果的物体材质
+        var cube = new THREE.Mesh(geometry,material)
+
+        // 光源
+        var spotLight = new THREE.SpotLight( 0xffffff )
+        spotLight.position.set(-40,60,-10)
+        scene.add( spotLight )
+
+        // 三要素 ： 场景 摄像机 物体
+        // 场景中添加物体
+        scene.add(cube)
+        // 渲染器渲染
+        // renderer.render(scene,camera)
+        // 上面是个平面的，注释上面👆，添加个角度
+        const animate = () => {
+            cube.rotation.x += 0.01 
+            cube.rotation.y += 0.01 
+            renderer.render(scene,camera)
+            requestAnimationFrame(animate)
+        }
+        animate()
+    </script>
+</body>
+</html>

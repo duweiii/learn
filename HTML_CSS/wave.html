@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            height:100%;
+            display: flex;
+            box-sizing: border-box;
+            padding-top:200px;
+            justify-content: center;
+            align-items: center;
+        }
+        article{
+            height:90%;
+            display: flex;
+            box-sizing: border-box;
+            padding-top:200px;
+            justify-content: center;
+            align-items: center;
+        }
+        div{
+            width:5px;
+            height:5px;
+            margin:2px;
+            background:red;
+            border-radius:5px;
+            position:relative;
+            animation: wave1 0.5s infinite ease-in alternate ;
+        }
+        /* div:nth-of-type(1){
+            animation: wave1 0.5s infinite ease alternate ;
+        }
+        div:nth-of-type(2){
+            animation: wave1 0.5s infinite ease alternate ;
+        }
+        div:nth-of-type(3){
+            animation: wave1 0.5s infinite ease alternate ;
+        }
+        div:nth-of-type(4){
+            animation: wave1 0.5s infinite ease alternate ;
+        } */
+        @keyframes wave1 {
+            from{
+                top:0px;
+            }
+            to{
+                top:-30px;
+            }
+        }
+        /* control */
+        main{
+            position:fixed;
+            bottom:10px;
+            width:100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        input{
+            width:150px;
+            outline:none;
+            border:1px solid #eee;
+            border-radius:3px;
+            margin-right:10px;
+        }
+        ::-webkit-input-placeholder{
+            font-size:12px;
+        }
+        button{
+            border:none;
+            font-size:12px;
+            margin:0px 10px;
+            position:relative;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:active{
+            top:1px;
+            left:1px;
+            animation-timing-function: linear ;
+        }
+    </style>
+</head>
+<body>
+    <article>
+
+    </article>
+    <main>
+        <input type="text" placeholder="animation duration , unit(s) ">
+        <input type="text" placeholder="element count">
+        <button id="start">start</button>
+        <button name="ease">ease</button>
+        <button name="ease-in">ease-in</button>
+        <button name="ease-in-out">ease-in-out</button>
+        <button name="ease-out">ease-out</button>
+        <button name="linear">linear</button>
+    </main>
+    <script>
+        let buttons = document.querySelectorAll("button")
+        const createAnimationDom = function(startTime,second,timingFunction){
+            let duration = startTime ? startTime : 0.5;
+            let count = second ? second : 10;
+            let timing = timingFunction ? timingFunction : 'ease-in';
+            document.querySelector("article").innerHTML = ''
+            for(let i = 0 ; i < count ; i++){
+                let node = document.createElement("div")
+                node.style.animationDelay = duration + ( i * 0.1 ) + 's'
+                timing && ( node.style.animationTimingFunction = timing )
+                document.querySelector("article").appendChild(node)
+            }
+        }
+        const gn = function(node){
+            return node.getAttribute("name")
+        }
+        // 点击timing-function按钮
+        for(let i = 0 ; i < buttons.length ; i++){
+            buttons[i].onclick = function(){
+                const [ duration , count ] = document.querySelectorAll("input")   
+                createAnimationDom(Number(duration.value),Number(count.value),gn(this))             
+            }
+        }
+        // 点击start
+        document.querySelector("#start").onclick = function(){
+            const [ duration , count ] = document.querySelectorAll("input")   
+            createAnimationDom(Number(duration.value),Number(count.value),gn(this))             
+        }
+    </script>
+</body>
+</html>

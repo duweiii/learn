@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./reset.css">
+    <style>
+        body{
+            background:rgb(61, 60, 63);
+        }
+        div{
+            width: 200px;
+            height: 200px;
+            position:relative;
+            margin:100px;
+            border: 1px solid #000;
+            border-radius:5px;
+            box-shadow: 14px 14px 5px #000;
+            overflow: hidden;
+        }
+        div::before{
+            content: '';
+            width:150%;
+            height:150%;
+            position: absolute;
+            background:conic-gradient(red 20deg,transparent 120deg );
+            top: -50px;
+            left: -50px;
+            animation: rotate 2s infinite linear reverse;
+        } 
+        div::after{
+            content: 'Animation';
+            position: absolute;
+            width:190px;
+            height:190px;
+            margin:5px;
+            border-radius: 5px;
+            background:#eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color:red;
+            background:rgb(61, 60, 63);
+            box-shadow: 14px 14px 14px #000 inset;
+            letter-spacing: 4px;
+        }
+
+        @keyframes rotate {
+            from{
+                transform:rotate(0deg)
+            }
+            to{
+                transform:rotate(360deg)
+            }
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+</html>

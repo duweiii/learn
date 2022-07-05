@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #dad{
+            width:300px;
+            height:400px;
+            outline:1px solid #000;
+            position: relative;
+            overflow:auto;
+        }
+        #scroll{
+            width:100%;
+            position: absolute;
+        }
+        #show{
+            width:300px;
+            height:400px;
+            transition: 0.3s;
+            position:fixed;
+            top:0;
+            left:0;
+            /* left :400px; */
+            z-index: -1;
+            transform:translateY(0px);
+        }
+        .item{
+            width:100%;
+            height:40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size:12px;
+        }
+        .item:nth-of-type(odd){
+            background:#eee;
+        }
+        *{
+            margin:0;
+            padding:0;
+        }
+    </style>
+</head>
+<body>
+    <div id="dad">
+        <div id="show">
+        </div>
+        <div id="scroll"></div>
+    </div>
+    <script>
+    // 准备list
+        const list = [];
+        let count = 0;
+        while(count < 1000000){
+            list.push(count++)
+        }
+        // 初始化
+        let str = '';
+        list.slice(0,10).map( item => str += `<div class="item">${item}</div>` )
+        document.querySelector("#show").innerHTML = str
+    // 准备数据
+        // item高度
+        const itemHeight = 40;
+        // 展示多少条数据
+        const showItemCount = 10;
+        // 产生滚动条(给scroll高度) 
+        document.querySelector("#scroll").style.height = itemHeight * list.length + 'px'
+        // 监听滚动事件
+        // 设置比较变量
+        let contrast;
+        document.querySelector("#dad").onscroll = function(e){
+            // 根据scrollTop计算startIndex
+            // 向下取整
+            let startIndex = ~~(this.scrollTop / itemHeight) 
+            let endIndex = startIndex + showItemCount;
+            // 判断startIndex与之前的是否相同，相同就不刷新数据,只做移动
+            // 不同就替换数据 
+            if(startIndex === contrast){
+
+            }else{
+                let itemString = ''
+                list.slice(startIndex,endIndex).map( item => itemString += `<div class="item">${item}</div>` )
+                document.querySelector("#show").innerHTML = itemString
+            }
+            // 移动
+            let gap = this.scrollTop - ( startIndex * itemHeight ) 
+            document.querySelector("#show").transform = `translateY(${gap}px)`
+        }
+
+    </script>
+</body>
+</html>
