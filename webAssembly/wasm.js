@@ -32,11 +32,8 @@ fetchAndInitiate('test.wasm').then( res =>{
   window.compute = compute;
   
   ticker( compute, count )
-  // 最快 0.0029歪日
+  // 最快 0.0029ms
 
   ticker( jsWhile, count);
   // 最快 0.17ms
 })
-
-
-
