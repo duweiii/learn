@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <circle-ring radius="50" inner-color="red" border-color="green" border-width="2"></circle-ring>
+  <script>
+    class CircleRing extends HTMLElement{
+      constructor(){
+        super();
+      }
+      connectedCallback(){
+        console.log( 'already insert to HTML Document' )
+        const size = this.getAttribute('radius') * 2;
+        const innerColor = this.getAttribute('inner-color');
+        const borderColor = this.getAttribute('border-color');
+        const borderWidth = this.getAttribute('border-width');
+
+        const styles = `
+          display: flex;
+          align-item: center;
+          justify-content: center;
+          width: ${size}px;
+          height: ${size}px;
+          box-sizing: border-box;
+          border-radius: 50%;
+          background-color: ${innerColor};
+          border: ${borderWidth}px solid ${borderColor};
+        `
+
+        this.style = styles;
+      }
+    }
+
+    customElements.define("circle-ring", CircleRing)
+
+    //  但是如果渲染很慢的话，是可以看到样式是后面元素插入到页面完成后才加上的。
+    //  是会破坏文档流的。
+    //  解决这个问题，可以参考 CSR 中常见的比如骨架屏的方式，先用个占位元素占个位置
+    //  技术上实现可以通过伪类选择器 :deinfed 和 :not(:defined) 做具体实现
+  </script>
+</body>
+</html>
