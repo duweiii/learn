@@ -1,0 +1,55 @@
+{
+  "name": "isomorphic-react",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:client": "webpack --config ./build/webpack.config.client.js",
+    "build:server": "webpack --config ./build/webpack.config.server.js",
+    "build": "npm run build:client&&npm run build:server",
+    "serve": "node public/server.js",
+    "start": "npm run build&&npm run serve",
+    "dev": "webpack-dev-server --config ./build/webpack.config.dev.js"
+  },
+  "keywords": [
+    "node.js",
+    "node",
+    "front-end",
+    "react",
+    "isomorphic"
+  ],
+  "author": "zhoujunpeng <rico.zjp@gmail.com> (https://github.com/zhoujunpeng)",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "pug": "^2.0.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.0.2",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-transform-async-to-promises": "^0.8.9",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "clean-webpack-plugin": "^2.0.1",
+    "copy-webpack-plugin": "^5.0.2",
+    "css-loader": "^2.1.1",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.6.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.3.1",
+    "webpack-merge": "^4.2.1",
+    "webpack-node-externals": "^1.7.2",
+    "webpack-stats-plugin": "^0.2.1"
+  }
+}
