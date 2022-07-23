@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <video autoplay></video>
+  <script>
+    var constraints = {
+      audio: true,
+      video: {
+        // mandatory: {
+        //   width: { min: 320},
+        //   height: { min: 180}
+        // },
+        optional: [
+          { width: { max: 1280 }},
+          { frameRate: 30 },
+          { facingMode: 'user' }
+        ]
+      }
+    }
+
+    const gotStream = stream => {
+      console.log( stream )
+      // const domm = document.querySelector("video");
+      // domm.src = window.URL.createObjectURL(stream);
+    }
+
+    const logErr = err => console.log( err )
+
+    navigator.getUserMedia(constraints, gotStream, logErr)
+
+  </script>
+</body>
+</html>
