@@ -42,4 +42,7 @@
   JavaScript权威指南-第八章第九章 函数&类
 - 2022/7/27
   微前端实践案例及乾坤框架
-- JavaScript权威指南-第十章 模块
+- 2022/7/28
+  JavaScript权威指南-第十章 模块
+- 2022/7/29
+  JavaScript权威指南-第十一章 JavaScript标准库
